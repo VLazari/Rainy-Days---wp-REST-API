@@ -11,6 +11,6 @@ burger.addEventListener("click", function () {
 
 // --- Nr. of items in cart --->
 
-import { nrOfItems } from "./functions.js";
+// import { nrOfItems } from "./functions.js";
 
-nrOfItems();
+// nrOfItems();

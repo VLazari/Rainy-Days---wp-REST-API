@@ -1,5 +1,4 @@
-// import { jacketList } from "./jacket-list.js";
-import { jacketSpec } from "./functions.js";
+import { jacketSpec, nrOfItems } from "./functions.js";
 
 const specContainer = document.querySelector(".jacket-description");
 const jacketImg = document.querySelector(".jacket-image");
@@ -10,6 +9,7 @@ const jacketId = parseInt(urlParams.get("id"));
 const url = "https://myprojects.digital/RainyDays//wp-json/wc/store/products/";
 const urlSpecJacket = url + jacketId;
 let jacketCart = [];
+//localStorage.clear();
 
 async function jacketList(fetchUrl) {
 	const response = await fetch(fetchUrl);
@@ -17,8 +17,22 @@ async function jacketList(fetchUrl) {
 
 	jacketSpec(result, specContainer, jacketImg);
 
+	const addToCart = document.querySelector(".product-add-cart");
+
+	addToCart.addEventListener("click", function () {
+		if (localStorage.getItem("Cart Items")) {
+			jacketCart = JSON.parse(localStorage.getItem("Cart Items"));
+		}
+		jacketCart.push(result.id);
+		localStorage.setItem("Cart Items", JSON.stringify(jacketCart));
+		jacketCart = [];
+		nrOfItems();
+		alert("Jacket added to cart");
+	});
+
 	const jacketImgColor = document.querySelector("#color");
 	let variationId = jacketId;
+
 	jacketImgColor.addEventListener("change", (event) => {
 		for (let i = 0; i < result.variations.length; i++) {
 			if (result.variations[i].attributes[1].value === event.target.value.toLowerCase()) {
@@ -38,42 +52,3 @@ async function jacketList(fetchUrl) {
 }
 
 jacketList(urlSpecJacket);
-
-//------------->
-
-// export function jacketSpec(jacketArray, specContainer) {
-// 	specContainer.innerHTML = `
-//   <div>
-//     <img class="jacket-image" src="${jacketArray.images[0].src}" alt="${jacketArray.name}"/>
-//   </div>
-//     <div class="jacket-description">
-//       <h3 class="jacket-name">${jacketArray.name}</h3>
-//       <p class="product-price">Price: ${jacketArray.prices.price}</p>
-//       <p class="jacket-name">Description:</p>
-//       <p class="product-description"> ${jacketArray.description}</p>
-//       <p class="product-add-cart" data-jacket-id="${jacketArray.id}">Add To Cart</p>
-//     </div>
-//   `;
-// }
-// import { jacketList } from "./jacket-list.js";
-// import { jacketSpec, nrOfItems } from "./functions.js";
-
-// const specContainer = document.querySelector(".jacket-spec");
-
-// const urlString = window.location.search;
-// const urlParams = new URLSearchParams(urlString);
-// const jacketId = parseInt(urlParams.get("id"));
-// let jacketCart = [];
-
-// jacketSpec(jacketList, specContainer, jacketId);
-
-// const addToCart = document.querySelector(".product-add-cart");
-
-// addToCart.addEventListener("click", function () {
-// 	const jacket = jacketList.find((element) => element.id === jacketId);
-// 	jacketCart = jacketCart.concat(JSON.parse(localStorage.getItem("Cart Items")));
-// 	jacketCart.push(jacket);
-// 	localStorage.setItem("Cart Items", JSON.stringify(jacketCart));
-// 	nrOfItems();
-// 	alert("Jacket added to cart");
-// });

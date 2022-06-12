@@ -6,7 +6,7 @@ An ecomerce jacket web site.
 
 ## Description
 
-Rainy Days is a school project of a fully functional and responsive on all screens, e-commerce website using REST API.
+Rainy Days is a school project of a fully functional and responsive on all screens, e-commerce website using REST API. The website was build using HTML, CSS, JavaScript, Wordpress REST API and have all the ecommerce functionality.
 
 ## Built With
 
